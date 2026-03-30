@@ -45,7 +45,6 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const heroPhoto = "https://res.cloudinary.com/dset5uqua/image/upload/v1774688322/Photo_63_1_rbongl.png";
-  const fallbackPhoto = "https://picsum.photos/seed/olesia/1920/1080";
 
   const navLinks = [
     { name: "Про мене", href: "#about" },
@@ -129,9 +128,6 @@ export default function App() {
               width={1920}
               height={1080}
               fetchPriority="high"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = fallbackPhoto;
-              }}
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
