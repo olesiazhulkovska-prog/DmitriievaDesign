@@ -44,7 +44,7 @@ const Button = ({ children, primary = false, className = "", href }: { children:
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  const heroPhoto = "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774688322/Photo_63_1_rbongl.png";
+  const heroPhoto = "https://res.cloudinary.com/dset5uqua/image/upload/v1774896823/001_osdv3b.png";
 
   const navLinks = [
     { name: "Про мене", href: "#about" },
@@ -122,21 +122,31 @@ export default function App() {
         {/* Background Image / Main Visual */}
         <div className="relative h-[70vh] md:h-[85vh] overflow-hidden bg-dark-base">
             <motion.img 
-              initial={{ scale: 1.1, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
+              initial={{ scale: 1.2, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
               src={heroPhoto}
               alt="Olesia Dmitriieva, Web Designer & Developer"
               width={1920}
               height={1080}
               fetchPriority="high"
               decoding="async"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top max-md:object-[70%_center]"
               referrerPolicy="no-referrer"
             />
           
           {/* Large Name Overlay */}
           <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 pointer-events-none">
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 1 }}
+              className="mb-4"
+            >
+              <span className="label-micro text-white-bg/60 border border-white-bg/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                Web Designer & Developer
+              </span>
+            </motion.div>
             <motion.h1 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -150,13 +160,13 @@ export default function App() {
 
           {/* Micro Text in Hero */}
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.2, duration: 1 }}
             className="absolute top-[35%] right-6 md:top-10 md:right-10 max-w-[180px] md:max-w-[240px] pointer-events-none"
           >
-            <p className="text-[10px] md:text-xs uppercase leading-relaxed text-dark-base font-medium text-left">
-              Створюю цифрові рішення, які виглядають дорого та працюють ефективно, сайти, що допомагають сучасним брендам рости.
+            <p className="text-[10px] md:text-xs uppercase leading-relaxed text-white-bg font-medium text-left drop-shadow-lg">
+              Допомагаю експертам та брендам виділятися через преміальний дизайн та продуману технічну реалізацію. Створюю сайти, що продають ваші сенси.
             </p>
           </motion.div>
         </div>
@@ -366,6 +376,12 @@ export default function App() {
             </div>
           </a>
         ))}
+
+        <div className="p-8 md:p-12 flex justify-center border-b border-white-bg/10">
+          <Button href="https://www.behance.net/olesiadmitriy" className="w-full md:w-auto">
+            Більше проєктів на Behance
+          </Button>
+        </div>
       </motion.section>
 
       {/* Testimonials */}
