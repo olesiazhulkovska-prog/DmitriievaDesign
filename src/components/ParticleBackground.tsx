@@ -52,7 +52,7 @@ const ParticleBackground: React.FC = () => {
       particles = [];
       // Adjust particle count based on screen area
       const area = width * height;
-      const dynamicCount = Math.min(Math.floor(area / 15000), 100);
+      const dynamicCount = Math.min(Math.floor(area / 25000), 60);
       for (let i = 0; i < dynamicCount; i++) {
         particles.push(new Particle(width, height));
       }
@@ -108,7 +108,7 @@ const ParticleBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none opacity-40"
+      className="absolute inset-0 w-full h-full pointer-events-none opacity-40 will-change-transform"
       style={{ mixBlendMode: 'screen' }}
     />
   );

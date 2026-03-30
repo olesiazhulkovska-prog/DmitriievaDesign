@@ -130,6 +130,7 @@ export default function App() {
               width={1920}
               height={1080}
               fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
@@ -215,6 +216,7 @@ export default function App() {
                   width={600}
                   height={800}
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover opacity-100 transition-opacity duration-500"
                   referrerPolicy="no-referrer"
                 />
@@ -345,6 +347,7 @@ export default function App() {
                 width={1200}
                 height={800}
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-top md:group-hover:scale-105 transition-all duration-1000"
                 referrerPolicy="no-referrer"
               />
@@ -429,6 +432,7 @@ export default function App() {
                 width={800}
                 height={1200}
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 referrerPolicy="no-referrer"
               />
