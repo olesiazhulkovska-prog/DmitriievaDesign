@@ -405,82 +405,87 @@ export default function App() {
       </motion.section>
 
       {/* Footer / Contact */}
-      <motion.footer 
+      <footer 
         id="contact" 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="border-t border-white-bg/10 relative overflow-hidden"
+        className="border-t border-white-bg/10 relative overflow-hidden bg-dark-base"
       >
         <ParticleBackground />
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10">
-          <div className="border-b md:border-b-0 md:border-r lg:border-r border-white-bg/10 overflow-hidden h-[400px] lg:h-auto">
-            <img 
-              src="https://res.cloudinary.com/dset5uqua/image/upload/v1774687666/6464A40A-40A2-4739-A462-C0E308BB3950_1_105_c_kmxvvc.jpg" 
-              alt="Olesia Dmitriieva - Дизайнер та розробник" 
-              width={800}
-              height={1200}
-              loading="lazy"
-              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-          
-          <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3">
-            <div className="md:col-span-1 lg:col-span-2 p-8 md:p-12 border-b md:border-b-0 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-between min-h-[300px] lg:min-h-[400px]">
-              <div>
-                <span className="label-micro mb-8 md:mb-12 block opacity-40">• Співпраця</span>
-                <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[0.9] font-black uppercase opacity-90">
-                  LET'S CREATE <br/> SOMETHING <br/> EXCEPTIONAL
-                </h2>
-              </div>
-              <div className="mt-12">
-                <Button primary href="https://t.me/olesia_dmitriyeva" className="w-full sm:w-auto [word-spacing:0.2em]">
-                  Обговорити проєкт
-                </Button>
-              </div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10% 0px" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10"
+        >
+          {/* Main Footer Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10">
+            <div className="border-b md:border-b-0 md:border-r lg:border-r border-white-bg/10 overflow-hidden h-[400px] lg:h-auto">
+              <img 
+                src="https://res.cloudinary.com/dset5uqua/image/upload/v1774687666/6464A40A-40A2-4739-A462-C0E308BB3950_1_105_c_kmxvvc.jpg" 
+                alt="Olesia Dmitriieva - Дизайнер та розробник" 
+                width={800}
+                height={1200}
+                loading="lazy"
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                referrerPolicy="no-referrer"
+              />
             </div>
-
-            <div className="flex flex-col">
-              <GridCell label="Email" className="border-b border-white-bg/10">
-                <a href="mailto:olesiazhulkovska@gmail.com" className="text-xs md:text-sm uppercase font-bold hover:text-primary-accent transition-colors mt-4 block truncate" aria-label="Надіслати email">
-                  olesiazhulkovska@gmail.com
-                </a>
-              </GridCell>
-              <GridCell label="Social" className="border-b border-white-bg/10">
-                <div className="flex flex-col gap-2 mt-4">
-                  <a href="https://www.instagram.com/olesia_dmitriieva/" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Instagram</a>
-                  <a href="https://t.me/olesia_dmitriyeva" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Telegram</a>
-                  <a href="https://www.behance.net/olesiadmitriy" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Behance</a>
+            
+            <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3">
+              <div className="md:col-span-1 lg:col-span-2 p-8 md:p-12 border-b md:border-b-0 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-between min-h-[300px] lg:min-h-[400px]">
+                <div>
+                  <span className="label-micro mb-8 md:mb-12 block opacity-40">• Співпраця</span>
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[0.9] font-black uppercase opacity-90">
+                    LET'S CREATE <br/> SOMETHING <br/> EXCEPTIONAL
+                  </h2>
                 </div>
-              </GridCell>
-              <GridCell label="Location" className="border-b-0">
-                <p className="text-[10px] uppercase tracking-widest opacity-50 mt-4">
-                  Чернівці, Україна <br/> Працюю по всьому світу
-                </p>
-              </GridCell>
+                <div className="mt-12">
+                  <Button primary href="https://t.me/olesia_dmitriyeva" className="w-full sm:w-auto [word-spacing:0.2em]">
+                    Обговорити проєкт
+                  </Button>
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <GridCell label="Email" className="border-b border-white-bg/10">
+                  <a href="mailto:olesiazhulkovska@gmail.com" className="text-xs md:text-sm uppercase font-bold hover:text-primary-accent transition-colors mt-4 block truncate" aria-label="Надіслати email">
+                    olesiazhulkovska@gmail.com
+                  </a>
+                </GridCell>
+                <GridCell label="Social" className="border-b border-white-bg/10">
+                  <div className="flex flex-col gap-2 mt-4">
+                    <a href="https://www.instagram.com/olesia_dmitriieva/" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Instagram</a>
+                    <a href="https://t.me/olesia_dmitriyeva" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Telegram</a>
+                    <a href="https://www.behance.net/olesiadmitriy" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Behance</a>
+                  </div>
+                </GridCell>
+                <GridCell label="Location" className="border-b-0">
+                  <p className="text-[10px] uppercase tracking-widest opacity-50 mt-4">
+                    Чернівці, Україна <br/> Працюю по всьому світу
+                  </p>
+                </GridCell>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Bottom Bar */}
-        <div className="grid grid-cols-2 lg:grid-cols-4">
-          <div className="p-6 border-r border-white-bg/10 flex items-center justify-center lg:justify-start">
-            <span className="text-[8px] uppercase tracking-[0.3em] opacity-30">© 2026 Olesia Dmitriieva</span>
+          {/* Bottom Bar */}
+          <div className="grid grid-cols-2 lg:grid-cols-4">
+            <div className="p-6 border-r border-white-bg/10 flex items-center justify-center lg:justify-start">
+              <span className="text-[8px] uppercase tracking-[0.3em] opacity-30">© 2026 Olesia Dmitriieva</span>
+            </div>
+            <div className="hidden lg:flex p-6 border-r border-white-bg/10 items-center justify-center">
+              <span className="text-[8px] uppercase tracking-[0.3em] opacity-30">Design & Art Direction</span>
+            </div>
+            <div className="hidden lg:flex p-6 border-r border-white-bg/10 items-center justify-center">
+              <span className="text-[8px] uppercase tracking-[0.3em] opacity-30">Premium Web Solutions</span>
+            </div>
+            <div className="p-6 flex items-center justify-center lg:justify-end">
+               <Plus className="w-4 h-4 text-primary-accent opacity-20" aria-hidden="true" />
+            </div>
           </div>
-          <div className="hidden lg:flex p-6 border-r border-white-bg/10 items-center justify-center">
-            <span className="text-[8px] uppercase tracking-[0.3em] opacity-30">Design & Art Direction</span>
-          </div>
-          <div className="hidden lg:flex p-6 border-r border-white-bg/10 items-center justify-center">
-            <span className="text-[8px] uppercase tracking-[0.3em] opacity-30">Premium Web Solutions</span>
-          </div>
-          <div className="p-6 flex items-center justify-center lg:justify-end">
-             <Plus className="w-4 h-4 text-primary-accent opacity-20" aria-hidden="true" />
-          </div>
-        </div>
-      </motion.footer>
+        </motion.div>
+      </footer>
     </div>
   );
 }

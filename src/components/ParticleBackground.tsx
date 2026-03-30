@@ -85,18 +85,32 @@ const ParticleBackground: React.FC = () => {
     };
 
     const handleResize = () => {
+      if (!canvas) return;
       const { width, height } = canvas.getBoundingClientRect();
       canvas.width = width;
       canvas.height = height;
+      
+      // Re-initialize particles to fit new dimensions
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle(canvas.width, canvas.height));
+      }
     };
 
-    window.addEventListener('resize', handleResize);
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleResize, 200);
+    };
+
+    window.addEventListener('resize', debouncedResize);
     init();
     animate();
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', debouncedResize);
+      clearTimeout(resizeTimeout);
     };
   }, []);
 
