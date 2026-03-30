@@ -46,17 +46,20 @@ const ParticleBackground: React.FC = () => {
       }
     }
 
-    const init = () => {
-      const { width, height } = canvas.getBoundingClientRect();
+    const init = (width: number, height: number) => {
       canvas.width = width;
       canvas.height = height;
       particles = [];
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(canvas.width, canvas.height));
+      // Adjust particle count based on screen area
+      const area = width * height;
+      const dynamicCount = Math.min(Math.floor(area / 15000), 100);
+      for (let i = 0; i < dynamicCount; i++) {
+        particles.push(new Particle(width, height));
       }
     };
 
     const animate = () => {
+      if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((p, i) => {
@@ -84,33 +87,21 @@ const ParticleBackground: React.FC = () => {
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    const handleResize = () => {
-      if (!canvas) return;
-      const { width, height } = canvas.getBoundingClientRect();
-      canvas.width = width;
-      canvas.height = height;
-      
-      // Re-initialize particles to fit new dimensions
-      particles = [];
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(canvas.width, canvas.height));
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (width > 0 && height > 0) {
+          init(width, height);
+        }
       }
-    };
+    });
 
-    let resizeTimeout: ReturnType<typeof setTimeout>;
-    const debouncedResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(handleResize, 200);
-    };
-
-    window.addEventListener('resize', debouncedResize);
-    init();
+    resizeObserver.observe(canvas.parentElement || canvas);
     animate();
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', debouncedResize);
-      clearTimeout(resizeTimeout);
+      resizeObserver.disconnect();
     };
   }, []);
 

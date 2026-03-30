@@ -34,6 +34,6 @@
     @apply border-r border-white-bg/10;
   }
   .label-micro {
-    @apply text-[10px] uppercase text-white-bg/40 font-medium;
+    @apply text-[10px] uppercase text-white-bg/70 font-medium;
   }
 }

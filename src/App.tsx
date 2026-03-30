@@ -44,7 +44,7 @@ const Button = ({ children, primary = false, className = "", href }: { children:
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  const heroPhoto = "https://res.cloudinary.com/dset5uqua/image/upload/v1774688322/Photo_63_1_rbongl.png";
+  const heroPhoto = "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774688322/Photo_63_1_rbongl.png";
 
   const navLinks = [
     { name: "Про мене", href: "#about" },
@@ -75,6 +75,8 @@ export default function App() {
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden p-4 text-white-bg"
+            aria-label={isMenuOpen ? "Закрити меню" : "Відкрити меню"}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X /> : <Menu />}
           </button>
@@ -196,19 +198,19 @@ export default function App() {
         <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 bg-light-bg text-dark-base">
           <div className="lg:col-span-2 border-b lg:border-b-0 lg:border-r border-dark-base/10 p-8 md:p-12 flex flex-col justify-between min-h-[400px]">
             <div>
-              <span className="label-micro mb-8 md:mb-12 block opacity-40">• Спеціалізація</span>
+              <span className="label-micro mb-8 md:mb-12 block opacity-60">• Спеціалізація</span>
               <h3 className="text-3xl md:text-4xl lg:text-5xl leading-[1.1] mb-8 font-normal">
                 Я працюю з інфобізнесом та експертними нішами — там, де дизайн має не прикрашати, а пояснювати і переконувати.
               </h3>
             </div>
-            <p className="text-dark-base/60 text-sm md:text-base font-light leading-relaxed max-w-xl">
+            <p className="text-dark-base/80 text-sm md:text-base font-light leading-relaxed max-w-xl">
               Серед моїх клієнтів: експерти, лікарі, коучі, HR та SMM агенції. Проєкти, в яких важливо не просто показати, а донести цінність і сформувати довіру.
             </p>
           </div>
           <div className="p-8 md:p-12 flex flex-col items-center justify-center gap-12">
              <div className="relative aspect-[3/4] w-full max-w-[240px] overflow-hidden">
                 <img 
-                  src="https://res.cloudinary.com/dset5uqua/image/upload/v1774786980/Photo_61_pfemd4.jpg" 
+                  src="https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774786980/Photo_61_pfemd4.jpg" 
                   alt="Olesia Dmitriieva - Професійний портрет" 
                   width={600}
                   height={800}
@@ -300,28 +302,28 @@ export default function App() {
             title: "Анна Саєнко",
             subtitle: "Експертний лендинг",
             description: "Цей сайт було створено як персональний бренд-простір для Анни Саєнко — з фокусом на експертність, естетику та чітку комунікацію цінності послуг.\n\nОсновне завдання проєкту — не просто представити особистий бренд, а вибудувати логічний користувацький шлях: від першого враження до розуміння, хто ця людина, чим вона корисна і як з нею працювати.\n\nСайт працює як інструмент довіри та конверсії, поєднуючи мінімалістичний дизайн, структурований контент і зрозумілий UX.",
-            img: "https://res.cloudinary.com/dset5uqua/image/upload/v1774710639/01_fgimtp.png",
+            img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710639/01_fgimtp.png",
             link: "https://www.annasaienko.com"
           },
           {
             title: "Nemova Agency",
             subtitle: "SMM Агенція",
             description: "Nemova Agency — це діджитал-агентство з Німеччини, що спеціалізується на брендингу та маркетингу в соціальних мережах. Метою проєкту було створення сучасної, орієнтованої на конверсію цільової сторінки Webflow, яка чітко передає послуги, досвід та ціннісну пропозицію агентства, водночас зміцнюючи довіру до бренду та видимість в Інтернеті.",
-            img: "https://res.cloudinary.com/dset5uqua/image/upload/v1774710640/02_igak01.png",
+            img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710640/02_igak01.png",
             link: "https://nemova-agency.de/"
           },
           {
             title: "Recruiting Support",
             subtitle: "HR Агенція",
             description: "Ми продумали структуру, дизайн і візуальну мову, яка підкреслює професійність та досвід команди, що надає послуги рекрутингу",
-            img: "https://res.cloudinary.com/dset5uqua/image/upload/v1774710641/05_lsyyho.png",
+            img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710641/05_lsyyho.png",
             link: "https://recruiting-support.com.ua/"
           },
           {
             title: "Інна Курилюк",
             subtitle: "Лікар-гінеколог, хірург",
-            description: "Інна Курилюк — лікар-гінеколог, хірург і спеціалістка з естетичної медицини, яка надає персоналізовану, доказову допомогу у сфері жіночого здоров’я та краси. Основна увага приділяється як професійному медичному підходу, так і комфорту пацієнток. Інна Курилюк пропонує повний спектр послуг — від гінекологічних консультацій і малоінвазивних хірургічних втручань до сучасних естетичних процедур.",
-            img: "https://res.cloudinary.com/dset5uqua/image/upload/v1774710639/04_lty1tr.png",
+            description: "Інна Курилюк — лікар-гінеколог, хірург і спеціалістка з естетичної медицини, яка надає персоналізовану, доказову допомогу у сфері жіночого здоров’я та краси. Основна увага приділяється як професійному медичному підходу, так і комфорту пацієнток. Інна Курилюк пропонує повний спектр послуг — від гінекологічних консультацій і малоінвазирних хірургічних втручань до сучасних естетичних процедур.",
+            img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710639/04_lty1tr.png",
             link: "https://www.innakuryliuk.com/"
           }
         ].map((work, i) => (
@@ -422,7 +424,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10">
             <div className="border-b md:border-b-0 md:border-r lg:border-r border-white-bg/10 overflow-hidden h-[400px] lg:h-auto">
               <img 
-                src="https://res.cloudinary.com/dset5uqua/image/upload/v1774687666/6464A40A-40A2-4739-A462-C0E308BB3950_1_105_c_kmxvvc.jpg" 
+                src="https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774687666/6464A40A-40A2-4739-A462-C0E308BB3950_1_105_c_kmxvvc.jpg" 
                 alt="Olesia Dmitriieva - Дизайнер та розробник" 
                 width={800}
                 height={1200}
