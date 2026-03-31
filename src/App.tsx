@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useTransform, animate, useInView, useMotionValueEvent } from "motion/react";
 import { Instagram, Send, Mail, ArrowRight, Quote, Plus, Menu, X } from "lucide-react";
 import ParticleBackground from './components/ParticleBackground';
 
@@ -15,12 +15,35 @@ const GridCell = ({ children, className = "", label = "" }: { children: React.Re
   </div>
 );
 
+const Counter = ({ value, duration = 2 }: { value: string; duration?: number }) => {
+  const numericValue = parseInt(value.replace(/\D/g, ""), 10);
+  const suffix = value.replace(/[0-9]/g, "");
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+  const [displayValue, setDisplayValue] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(count, numericValue, { duration, ease: "easeOut" });
+      return controls.stop;
+    }
+  }, [isInView, count, numericValue, duration]);
+
+  useMotionValueEvent(rounded, "change", (latest) => {
+    setDisplayValue(latest);
+  });
+
+  return <span ref={ref}>{displayValue}{suffix}</span>;
+};
+
 const Button = ({ children, primary = false, className = "", href }: { children: React.ReactNode; primary?: boolean; className?: string; href?: string }) => {
   const content = (
     <motion.button
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className={`px-6 py-4 md:px-8 md:py-4 text-[10px] md:text-xs font-bold uppercase transition-all duration-300 rounded-none text-center ${
+      className={`px-6 py-4 md:px-8 md:py-4 text-[10px] md:text-xs font-bold uppercase transition-all duration-300 rounded-none text-center [word-spacing:0.2em] ${
         primary 
           ? "bg-dark-base text-white-bg border border-white-bg/10 hover:bg-light-accent hover:border-light-accent" 
           : "border border-white-bg/20 text-white-bg hover:bg-white-bg hover:text-dark-base"
@@ -106,6 +129,15 @@ export default function App() {
                   {link.name}
                 </a>
               ))}
+              <div className="mt-4">
+                <Button 
+                  primary 
+                  href="https://t.me/olesia_dmitriyeva" 
+                  className="w-full text-sm py-6 border-white-bg/20"
+                >
+                  Обговорити проєкт
+                </Button>
+              </div>
             </nav>
           </motion.div>
         )}
@@ -141,9 +173,9 @@ export default function App() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4, duration: 1 }}
-              className="mb-4"
+              className="mb-6"
             >
-              <span className="label-micro text-white-bg/60 border border-white-bg/20 px-3 py-1 rounded-full backdrop-blur-sm">
+              <span className="text-[11px] md:text-xs uppercase font-bold text-white-bg/80 border border-white-bg/20 px-5 py-2 rounded-full backdrop-blur-sm">
                 Web Designer & Developer
               </span>
             </motion.div>
@@ -194,6 +226,17 @@ export default function App() {
           </GridCell>
         </motion.section>
 
+        {/* Mobile CTA Button */}
+        <div className="md:hidden p-6 border-b border-white-bg/10">
+          <Button 
+            primary 
+            href="https://t.me/olesia_dmitriyeva" 
+            className="w-full border-white-bg/20"
+          >
+            Обговорити проєкт
+          </Button>
+        </div>
+
       {/* About Section */}
       <motion.section 
         id="about" 
@@ -231,11 +274,49 @@ export default function App() {
                   referrerPolicy="no-referrer"
                 />
              </div>
-             <p className="text-[10px] uppercase tracking-widest font-light leading-relaxed text-center opacity-60">
+             <p className="text-[10px] uppercase tracking-[-0.07em] font-light leading-relaxed text-center opacity-60">
                Естетика • Структура • Маркетинг
              </p>
           </div>
         </div>
+      </motion.section>
+
+      {/* Social Proof Block */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10 bg-dark-base"
+      >
+        {[
+          { stat: "5+", label: "років", desc: "у дизайні" },
+          { stat: "30+", label: "лендингів", desc: "для інфобізнесу та експертних ніш" },
+          { stat: "30+", label: "презентацій", desc: "для продажів, виступів та лекцій" },
+          { stat: "200+", label: "креативів", desc: "для Instagram" }
+        ].map((item, i) => (
+          <motion.div 
+            key={i} 
+            whileHover={{ backgroundColor: "rgba(255,255,255,0.02)" }}
+            className={`p-8 md:p-12 flex flex-col justify-start border-b md:border-b-0 ${i !== 3 ? 'md:border-r' : ''} border-white-bg/10 transition-colors duration-500 relative group overflow-hidden`}
+          >
+            <div className="absolute inset-0 bg-radial-gradient from-white-bg/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: i * 0.1, duration: 0.8 }}
+            >
+              <div className="flex flex-col mb-2">
+                <span className="text-4xl md:text-5xl font-normal tracking-[-0.07em] leading-none">
+                  <Counter value={item.stat} />
+                </span>
+                <span className="text-3xl md:text-4xl font-normal tracking-[-0.07em] leading-tight">{item.label}</span>
+              </div>
+              <span className="text-[10px] md:text-xs uppercase opacity-60 tracking-[-0.07em] block mt-4">{item.desc}</span>
+            </motion.div>
+          </motion.div>
+        ))}
       </motion.section>
 
       {/* Services Section */}
@@ -250,14 +331,32 @@ export default function App() {
         <div className="p-8 md:p-12 md:border-r lg:border-r border-dark-base/10 flex flex-col justify-start min-h-[200px] lg:min-h-[400px] sticky top-0 md:relative bg-light-bg z-20">
           <h2 className="text-5xl md:text-7xl font-bold uppercase">Послуги</h2>
         </div>
-        <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-3">
           {[
-            "Лендинги для інфопродуктів",
-            "Багатосторінкові сайти",
-            "Сайти для HR та рекрутингу",
-            "Сайти для SMM агенцій",
-            "Презентації",
-            "Візуали для Instagram"
+            { 
+              title: "Лендинги для інфопродуктів", 
+              desc: "Сторінки, які продають курси, консультації та програми через структуру, що веде клієнта до рішення." 
+            },
+            { 
+              title: "Багатосторінкові сайти", 
+              desc: "Повноцінний сайт для вашого бренду: від головної до блогу. Все логічно, все на місці." 
+            },
+            { 
+              title: "Сайти для HR та рекрутингу", 
+              desc: "Сторінки, що передають культуру компанії й приваблюють потрібних кандидатів." 
+            },
+            { 
+              title: "Сайти для SMM-агенцій", 
+              desc: "Сайт, що показує вашу насмотреність і системність. Щоб клієнти обирали вас ще до першого дзвінка." 
+            },
+            { 
+              title: "Презентації", 
+              desc: "Структуровані слайди для продажів, виступів або ж лекції. З логікою, що переконує, і виглядом, що запам'ятовується." 
+            },
+            { 
+              title: "Візуали для Instagram", 
+              desc: "Сторіс та пости, що відповідають стилю вашого бренду й не губляться у стрічці." 
+            }
           ].map((service, i) => (
             <div 
               key={i} 
@@ -265,10 +364,13 @@ export default function App() {
                 top: `${70 + (i * 2)}px`,
                 zIndex: 10 + i 
               }}
-              className="sticky md:static p-8 md:p-12 border-b border-dark-base/10 sm:[&:nth-child(odd)]:border-r lg:[&:not(:nth-child(3n))]:border-r border-dark-base/10 group hover:bg-dark-base hover:text-white-bg transition-all duration-500 cursor-pointer bg-light-bg shadow-[0_-10px_30px_rgba(0,0,0,0.08)] md:shadow-none"
+              className="sticky md:static p-8 md:p-12 border-b border-dark-base/10 lg:[&:not(:nth-child(3n))]:border-r border-dark-base/10 group hover:bg-dark-base hover:text-white-bg transition-all duration-500 cursor-pointer bg-light-bg shadow-[0_-10px_30px_rgba(0,0,0,0.08)] md:shadow-none"
             >
               <span className="text-[10px] mb-6 md:mb-8 block opacity-40">0{i + 1}</span>
-              <h3 className="text-xl md:text-2xl mb-8 md:mb-12 uppercase">{service}</h3>
+              <h3 className="text-xl md:text-2xl mb-4 uppercase">{service.title}</h3>
+              <p className="text-xs md:text-sm font-light leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity mb-8">
+                {service.desc}
+              </p>
               <Plus className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
             </div>
           ))}
@@ -281,7 +383,10 @@ export default function App() {
           >
             <div>
               <span className="text-[10px] mb-6 md:mb-8 block opacity-40">07</span>
-              <h3 className="text-xl md:text-2xl mb-8 md:mb-12 uppercase">Комплексна підтримка</h3>
+              <h3 className="text-xl md:text-2xl mb-4 uppercase">Комплексна підтримка</h3>
+              <p className="text-xs md:text-sm font-light leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity mb-8">
+                Супровід після запуску: оновлення, правки, розвиток сайту разом із вашим бізнесом.
+              </p>
             </div>
             <div className="flex items-end justify-between">
               <Button primary href="https://t.me/olesia_dmitriyeva" className="bg-dark-base text-white-bg border-dark-base hover:bg-light-accent hover:text-white-bg group-hover:bg-white-bg group-hover:text-dark-base w-full uppercase">Обговорити</Button>
@@ -337,6 +442,14 @@ export default function App() {
             description: "Інна Курилюк, лікар-гінеколог, хірург і спеціалістка з естетичної медицини, яка надає персоналізовану, доказову допомогу у сфері жіночого здоров’я та краси. Основна увага приділяється як професійному медичному підходу, так і комфорту пацієнток. Інна Курилюк пропонує повний спектр послуг, від гінекологічних консультацій і малоінвазирних хірургічних втручань до сучасних естетичних процедур.",
             img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710639/04_lty1tr.png",
             link: "https://www.innakuryliuk.com/"
+          },
+          {
+            title: "UTB Recruitment Agency",
+            subtitle: "Рекрутингова агенція",
+            description: "Тут був наданий повний спектр послуг: розробка логотипу, оформлення соціальних мереж, створення двомовного сайту",
+            img: "https://res.cloudinary.com/dset5uqua/image/upload/v1774961474/05_onrh9l.png",
+            link: "https://www.utb-recruiting.com/",
+            position: "object-right"
           }
         ].map((work, i) => (
           <a 
@@ -346,7 +459,7 @@ export default function App() {
             rel={work.link ? "noopener noreferrer" : undefined}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10 group cursor-pointer"
           >
-            <div className="md:col-span-1 lg:col-span-3 relative h-[300px] sm:h-[400px] md:h-[60vh] overflow-hidden md:border-r lg:border-r border-white-bg/10">
+            <div className="md:col-span-1 lg:col-span-3 relative aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] overflow-hidden md:border-r lg:border-r border-white-bg/10">
               <motion.img 
                 initial={{ scale: 1.1 }}
                 whileInView={{ scale: 1 }}
@@ -358,7 +471,7 @@ export default function App() {
                 height={800}
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover object-top md:group-hover:scale-105 transition-all duration-1000"
+                className={`w-full h-full object-cover ${work.position || 'object-top'} md:group-hover:scale-105 transition-all duration-1000`}
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -396,7 +509,7 @@ export default function App() {
         <div className="p-8 md:p-12 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-start min-h-[100px] lg:min-h-[400px]">
           <h2 className="text-5xl md:text-7xl font-bold uppercase">Відгуки</h2>
         </div>
-        <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 md:grid-cols-3">
+        <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-2">
           {[
             {
               name: "Анна Саєнко",
@@ -412,9 +525,14 @@ export default function App() {
               name: "Recruiting Support",
               role: "HR Агенція",
               text: "Для нас було важливо зробити сайт, який виглядає професійно і зрозуміло для кандидатів та клієнтів. В результаті отримали чистий, структурований дизайн, який добре передає нашу експертність і не перевантажує інформацією. Окремо хочемо відзначити логіку подачі, все чітко і по суті."
+            },
+            {
+              name: "UTB Recruitment Agency",
+              role: "Рекрутингова агенція",
+              text: "Олеся розробила для нас логотип, сайт і соціальні мережі як єдину систему. У результаті ми отримали сучасний, структурований дизайн, який підсилює довіру до бренду та чітко передає нашу експертність. \n\nРекомендуємо як дизайнера, який працює на результат, а не просто «красиво»."
             }
           ].map((t, i) => (
-            <div key={i} className={`p-8 md:p-12 flex flex-col justify-center ${i !== 2 ? 'border-b md:border-b-0 md:border-r' : ''} border-white-bg/10 ${i % 2 === 1 ? 'bg-light-bg/5' : ''}`}>
+            <div key={i} className={`p-8 md:p-12 flex flex-col justify-center border-b border-white-bg/10 lg:border-r ${i % 2 === 1 ? 'lg:border-r-0 bg-light-bg/5' : ''}`}>
               <Quote strokeWidth={1} className="w-6 h-6 md:w-8 md:h-8 text-white-bg mb-6 md:mb-8 opacity-50" aria-hidden="true" />
               <p className="text-sm md:text-base font-light italic leading-relaxed mb-8 md:mb-12 opacity-80">
                 "{t.text}"
@@ -458,12 +576,12 @@ export default function App() {
               <div className="md:col-span-1 lg:col-span-2 p-8 md:p-12 border-b md:border-b-0 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-between min-h-[300px] lg:min-h-[400px]">
                 <div>
                   <span className="label-micro mb-8 md:mb-12 block opacity-40">• Співпраця</span>
-                  <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[0.9] font-black uppercase opacity-90">
-                    LET'S CREATE <br/> SOMETHING <br/> EXCEPTIONAL
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] font-sans font-normal uppercase opacity-90 tracking-[-0.07em]">
+                    СТВОРІМО ЩОСЬ <br/> СПРАВЖНЄ <br/> РАЗОМ
                   </h2>
                 </div>
                 <div className="mt-12">
-                  <Button primary href="https://t.me/olesia_dmitriyeva" className="w-full sm:w-auto [word-spacing:0.2em]">
+                  <Button primary href="https://t.me/olesia_dmitriyeva" className="w-full sm:w-auto">
                     Обговорити проєкт
                   </Button>
                 </div>
@@ -477,13 +595,13 @@ export default function App() {
                 </GridCell>
                 <GridCell label="Social" className="border-b border-white-bg/10">
                   <div className="flex flex-col gap-2 mt-4">
-                    <a href="https://www.instagram.com/olesia_dmitriieva/" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Instagram</a>
-                    <a href="https://t.me/olesia_dmitriyeva" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Telegram</a>
-                    <a href="https://www.behance.net/olesiadmitriy" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest hover:text-primary-accent transition-colors">Behance</a>
+                    <a href="https://www.instagram.com/olesia_dmitriieva/" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-primary-accent transition-colors">Instagram</a>
+                    <a href="https://t.me/olesia_dmitriyeva" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-primary-accent transition-colors">Telegram</a>
+                    <a href="https://www.behance.net/olesiadmitriy" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-primary-accent transition-colors">Behance</a>
                   </div>
                 </GridCell>
                 <GridCell label="Location" className="border-b-0">
-                  <p className="text-[10px] uppercase tracking-widest opacity-50 mt-4">
+                  <p className="text-[10px] uppercase opacity-50 mt-4">
                     Чернівці, Україна <br/> Працюю по всьому світу
                   </p>
                 </GridCell>
