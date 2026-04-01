@@ -274,7 +274,7 @@ export default function App() {
                   referrerPolicy="no-referrer"
                 />
              </div>
-             <p className="text-[10px] uppercase tracking-[-0.07em] font-light leading-relaxed text-center opacity-60">
+             <p className="text-[10px] uppercase tracking-[-0.04em] font-light leading-relaxed text-center opacity-60">
                Естетика • Структура • Маркетинг
              </p>
           </div>
@@ -308,12 +308,12 @@ export default function App() {
               transition={{ delay: i * 0.1, duration: 0.8 }}
             >
               <div className="flex flex-col mb-2">
-                <span className="text-4xl md:text-5xl font-normal tracking-[-0.07em] leading-none">
+                <span className="text-4xl md:text-5xl font-normal tracking-[-0.04em] leading-none">
                   <Counter value={item.stat} />
                 </span>
-                <span className="text-3xl md:text-4xl font-normal tracking-[-0.07em] leading-tight">{item.label}</span>
+                <span className="text-3xl md:text-4xl font-normal tracking-[-0.04em] leading-tight">{item.label}</span>
               </div>
-              <span className="text-[10px] md:text-xs uppercase opacity-60 tracking-[-0.07em] block mt-4">{item.desc}</span>
+              <span className="text-[10px] md:text-xs uppercase opacity-60 tracking-[-0.04em] block mt-4">{item.desc}</span>
             </motion.div>
           </motion.div>
         ))}
@@ -576,7 +576,7 @@ export default function App() {
               <div className="md:col-span-1 lg:col-span-2 p-8 md:p-12 border-b md:border-b-0 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-between min-h-[300px] lg:min-h-[400px]">
                 <div>
                   <span className="label-micro mb-8 md:mb-12 block opacity-40">• Співпраця</span>
-                  <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] font-sans font-normal uppercase opacity-90 tracking-[-0.07em]">
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] font-sans font-normal uppercase opacity-90 tracking-[-0.04em]">
                     СТВОРІМО ЩОСЬ <br/> СПРАВЖНЄ <br/> РАЗОМ
                   </h2>
                 </div>

@@ -13,7 +13,7 @@
 @layer base {
   html {
     font-family: var(--font-sans);
-    letter-spacing: -0.07em;
+    letter-spacing: -0.04em;
   }
 
   body {
@@ -27,7 +27,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-bold uppercase tracking-[-0.07em];
+    @apply font-sans font-bold uppercase tracking-[-0.04em];
   }
 }
 
