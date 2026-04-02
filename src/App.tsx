@@ -67,7 +67,7 @@ const Button = ({ children, primary = false, className = "", href }: { children:
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  const heroPhoto = "https://res.cloudinary.com/dset5uqua/image/upload/v1774896823/001_osdv3b.png";
+  const heroPhoto = "https://res.cloudinary.com/dset5uqua/image/upload/v1775136343/001_osdv3b_qfimqe.webp";
 
   const navLinks = [
     { name: "Про мене", href: "#about" },
@@ -183,7 +183,7 @@ export default function App() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
-              className="text-[18vw] md:text-[12vw] lg:text-[14vw] leading-[0.8] font-black -mb-[2vw] text-white-bg flex flex-col"
+              className="text-[15vw] md:text-[12vw] lg:text-[14vw] leading-[0.8] font-black -mb-[2vw] text-white-bg flex flex-col"
             >
               <span>OLESIA</span>
               <span className="self-end">DMITRIIEVA</span>

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://ais-dev-mo566lx4e4tnuvdk2npnkk-175908439135.europe-west3.run.app/sitemap.xml
+Sitemap: https://www.dmitriieva.com/sitemap.xml
