@@ -9,7 +9,7 @@ import { Instagram, Send, Mail, ArrowRight, Quote, Plus, Menu, X } from "lucide-
 import ParticleBackground from './components/ParticleBackground';
 
 const GridCell = ({ children, className = "", label = "" }: { children: React.ReactNode; className?: string; label?: string }) => (
-  <div className={`relative p-6 md:p-10 border-b border-white-bg/10 ${className}`}>
+  <div className={`relative p-6 md:p-10 border-b border-charcoal-dark/10 ${className}`}>
     {label && <span className="label-micro absolute top-4 left-6 md:top-6 md:left-10">{label}</span>}
     {children}
   </div>
@@ -38,16 +38,18 @@ const Counter = ({ value, duration = 2 }: { value: string; duration?: number }) 
   return <span ref={ref}>{displayValue}{suffix}</span>;
 };
 
-const Button = ({ children, primary = false, className = "", href }: { children: React.ReactNode; primary?: boolean; className?: string; href?: string }) => {
+const Button = ({ children, variant = "primary", className = "", href }: { children: React.ReactNode; variant?: "primary" | "outline-dark" | "outline-light"; className?: string; href?: string }) => {
+  const variants = {
+    primary: "bg-charcoal-dark text-white-bg border border-charcoal-dark/10 hover:bg-teal-hover hover:border-teal-hover",
+    "outline-dark": "bg-transparent text-charcoal-dark border border-charcoal-dark/30 hover:bg-teal-hover hover:border-teal-hover hover:text-white-bg",
+    "outline-light": "bg-transparent text-white-bg border border-white-bg/30 hover:bg-teal-hover hover:border-teal-hover hover:text-white-bg"
+  };
+
   const content = (
     <motion.button
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className={`px-6 py-4 md:px-8 md:py-4 text-[10px] md:text-xs font-bold uppercase transition-all duration-300 rounded-none text-center [word-spacing:0.2em] ${
-        primary 
-          ? "bg-dark-base text-white-bg border border-white-bg/10 hover:bg-light-accent hover:border-light-accent" 
-          : "border border-white-bg/20 text-white-bg hover:bg-white-bg hover:text-dark-base"
-      } ${className}`}
+      className={`px-6 py-4 md:px-8 md:py-4 text-[10px] md:text-xs font-bold uppercase transition-all duration-300 rounded-none text-center [word-spacing:0.2em] ${variants[variant]} ${className}`}
     >
       {children}
     </motion.button>
@@ -77,21 +79,21 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-dark-base text-white-bg selection:bg-primary-accent selection:text-white-bg overflow-x-hidden">
+    <div className="min-h-screen bg-stone-bg text-charcoal-dark selection:bg-accent-line selection:text-white-bg overflow-x-hidden">
       {/* Header / Nav */}
-      <header className="grid grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10 sticky top-0 z-50 bg-dark-base/80 backdrop-blur-md">
+      <header className="grid grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10 sticky top-0 z-50 bg-charcoal-dark/95 backdrop-blur-md">
         <div className="p-4 md:p-8 border-r border-white-bg/10 flex items-center">
-          <span className="text-base md:text-xl font-black uppercase whitespace-nowrap">Olesia Dmitriieva</span>
+          <span className="text-base md:text-xl font-black uppercase whitespace-nowrap text-white-bg">Olesia Dmitriieva</span>
         </div>
         
-        <div className="hidden lg:flex p-8 border-r border-white-bg/10 items-center justify-center gap-8 text-[10px] uppercase text-white-bg/60">
+        <div className="hidden lg:flex p-8 border-r border-white-bg/10 items-center justify-center gap-8 text-[10px] uppercase text-white-bg/70">
           {navLinks.slice(0, 3).map((link) => (
-            <a key={link.name} href={link.href} className="hover:text-white-bg transition-colors">{link.name}</a>
+            <a key={link.name} href={link.href} className="hover:text-accent-line transition-colors">{link.name}</a>
           ))}
         </div>
         
         <div className="hidden lg:flex p-8 border-r border-white-bg/10 items-center justify-center">
-          <span className="label-micro">Доступна для нових проєктів</span>
+          <span className="label-micro text-white-bg">Доступна для нових проєктів</span>
         </div>
         
         <div className="flex items-center justify-end">
@@ -103,7 +105,7 @@ export default function App() {
           >
             {isMenuOpen ? <X /> : <Menu />}
           </button>
-          <a href="https://t.me/olesia_dmitriyeva" target="_blank" rel="noopener noreferrer" className="hidden lg:flex h-full px-8 bg-dark-base text-white-bg border-l border-white-bg/10 text-[10px] uppercase font-bold hover:bg-light-accent transition-all items-center gap-2 [word-spacing:0.2em]" aria-label="Зв'язатися в Telegram">
+          <a href="https://t.me/olesia_dmitriyeva" target="_blank" rel="noopener noreferrer" className="hidden lg:flex h-full px-8 bg-transparent text-white-bg border-l border-white-bg/10 text-[10px] uppercase font-bold hover:bg-teal-hover hover:text-white-bg transition-all items-center gap-2 [word-spacing:0.2em]" aria-label="Зв'язатися в Telegram">
             Обговорити проєкт <ArrowRight className="w-3 h-3" aria-hidden="true" />
           </a>
         </div>
@@ -116,7 +118,7 @@ export default function App() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-dark-base pt-24 px-6 md:hidden"
+            className="fixed inset-0 z-40 bg-charcoal-dark pt-24 px-6 md:hidden text-white-bg"
           >
             <nav className="flex flex-col gap-8">
               {navLinks.map((link) => (
@@ -131,9 +133,9 @@ export default function App() {
               ))}
               <div className="mt-4">
                 <Button 
-                  primary 
+                  variant="outline-light" 
                   href="https://t.me/olesia_dmitriyeva" 
-                  className="w-full text-sm py-6 border-white-bg/20"
+                  className="w-full text-sm py-6"
                 >
                   Обговорити проєкт
                 </Button>
@@ -152,7 +154,7 @@ export default function App() {
         className="relative"
       >
         {/* Background Image / Main Visual */}
-        <div className="relative h-[70vh] md:h-[85vh] overflow-hidden bg-dark-base">
+        <div className="relative h-[70vh] md:h-[85vh] overflow-hidden bg-stone-bg">
             <motion.img 
               initial={{ scale: 1.2, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -175,7 +177,7 @@ export default function App() {
               transition={{ delay: 0.4, duration: 1 }}
               className="mb-6"
             >
-              <span className="text-[11px] md:text-xs uppercase font-bold text-white-bg/80 border border-white-bg/20 px-5 py-2 rounded-full backdrop-blur-sm">
+              <span className="text-[11px] md:text-xs uppercase font-bold text-white-bg bg-white-bg/10 border border-white-bg/20 px-5 py-2 rounded-full backdrop-blur-md shadow-xl">
                 Web Designer & Developer
               </span>
             </motion.div>
@@ -183,7 +185,7 @@ export default function App() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
-              className="text-[15vw] md:text-[12vw] lg:text-[14vw] leading-[0.8] font-black -mb-[2vw] text-white-bg flex flex-col"
+              className="text-[15vw] md:text-[12vw] lg:text-[14vw] leading-[0.8] font-black -mb-[2vw] text-white flex flex-col drop-shadow-2xl"
             >
               <span>OLESIA</span>
               <span className="self-end">DMITRIIEVA</span>
@@ -197,7 +199,7 @@ export default function App() {
             transition={{ delay: 1.2, duration: 1 }}
             className="absolute top-[35%] right-6 md:top-10 md:right-10 max-w-[180px] md:max-w-[240px] pointer-events-none"
           >
-            <p className="text-[10px] md:text-xs uppercase leading-relaxed text-white-bg font-medium text-left drop-shadow-lg">
+            <p className="text-[10px] md:text-xs uppercase leading-relaxed text-white font-medium text-left drop-shadow-lg">
               Допомагаю експертам та брендам виділятися через преміальний дизайн та продуману технічну реалізацію. Створюю сайти, що продають ваші сенси.
             </p>
           </motion.div>
@@ -210,7 +212,7 @@ export default function App() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.8 }}
-          className="grid grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10"
+          className="grid grid-cols-2 lg:grid-cols-4 border-b border-charcoal-dark/10 bg-charcoal-dark text-white-bg"
         >
           <GridCell label="Локація" className="col-span-1 border-r border-white-bg/10">
             <p className="text-[10px] md:text-xs uppercase mt-4">Чернівці, Україна</p>
@@ -227,11 +229,11 @@ export default function App() {
         </motion.section>
 
         {/* Mobile CTA Button */}
-        <div className="md:hidden p-6 border-b border-white-bg/10">
+        <div className="md:hidden p-6 border-b border-charcoal-dark/10">
           <Button 
-            primary 
+            variant="outline-dark" 
             href="https://t.me/olesia_dmitriyeva" 
-            className="w-full border-white-bg/20"
+            className="w-full"
           >
             Обговорити проєкт
           </Button>
@@ -244,20 +246,19 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-charcoal-dark/10"
       >
-        <div className="p-8 md:p-12 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-start min-h-[100px] lg:min-h-[400px]">
-          <h2 className="text-5xl md:text-7xl font-bold uppercase">Про мене</h2>
+        <div className="p-8 md:p-12 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-start min-h-[100px] lg:min-h-[400px] bg-charcoal-dark text-white-bg">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-3xl xl:text-7xl font-bold uppercase whitespace-nowrap lg:whitespace-normal">Про мене</h2>
         </div>
-        <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 bg-light-bg text-dark-base">
-          <div className="lg:col-span-2 border-b lg:border-b-0 lg:border-r border-dark-base/10 p-8 md:p-12 flex flex-col justify-between min-h-[400px]">
+        <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 bg-white-bg text-charcoal-dark">
+          <div className="lg:col-span-2 border-b lg:border-b-0 lg:border-r border-charcoal-dark/10 p-8 md:p-12 flex flex-col justify-between min-h-[400px]">
             <div>
-              <span className="label-micro mb-8 md:mb-12 block opacity-60">• Спеціалізація</span>
               <h3 className="text-3xl md:text-4xl lg:text-5xl leading-[1.1] mb-8 font-normal">
                 Я працюю з інфобізнесом та експертними нішами, там, де дизайн має не прикрашати, а пояснювати і переконувати.
               </h3>
             </div>
-            <p className="text-dark-base/80 text-sm md:text-base font-light leading-relaxed max-w-xl">
+            <p className="text-charcoal-dark/80 text-sm md:text-base font-light leading-relaxed max-w-xl">
               Серед моїх клієнтів: експерти, лікарі, коучі, HR та SMM агенції. Проєкти, в яких важливо не просто показати, а донести цінність і сформувати довіру.
             </p>
           </div>
@@ -287,7 +288,7 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10 bg-dark-base"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-charcoal-dark/10 bg-charcoal-dark text-white-bg"
       >
         {[
           { stat: "5+", label: "років", desc: "у дизайні" },
@@ -297,7 +298,7 @@ export default function App() {
         ].map((item, i) => (
           <motion.div 
             key={i} 
-            whileHover={{ backgroundColor: "rgba(255,255,255,0.02)" }}
+            whileHover={{ backgroundColor: "rgba(255,255,255,0.05)" }}
             className={`p-8 md:p-12 flex flex-col justify-start border-b md:border-b-0 ${i !== 3 ? 'md:border-r' : ''} border-white-bg/10 transition-colors duration-500 relative group overflow-hidden`}
           >
             <div className="absolute inset-0 bg-radial-gradient from-white-bg/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -326,10 +327,10 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-dark-base/10 bg-light-bg text-dark-base relative"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-charcoal-dark/10 bg-stone-bg text-charcoal-dark relative"
       >
-        <div className="p-8 md:p-12 md:border-r lg:border-r border-dark-base/10 flex flex-col justify-start min-h-[200px] lg:min-h-[400px] sticky top-0 md:relative bg-light-bg z-20">
-          <h2 className="text-5xl md:text-7xl font-bold uppercase">Послуги</h2>
+        <div className="p-8 md:p-12 md:border-r lg:border-r border-charcoal-dark/10 flex flex-col justify-start min-h-[200px] lg:min-h-[400px] sticky top-0 md:relative bg-stone-bg z-20">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-3xl xl:text-7xl font-bold uppercase text-brown-heading whitespace-nowrap lg:whitespace-normal">Послуги</h2>
         </div>
         <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-3">
           {[
@@ -364,10 +365,10 @@ export default function App() {
                 top: `${70 + (i * 2)}px`,
                 zIndex: 10 + i 
               }}
-              className="sticky md:static p-8 md:p-12 border-b border-dark-base/10 lg:[&:not(:nth-child(3n))]:border-r border-dark-base/10 group hover:bg-dark-base hover:text-white-bg transition-all duration-500 cursor-pointer bg-light-bg shadow-[0_-10px_30px_rgba(0,0,0,0.08)] md:shadow-none"
+              className="sticky md:static p-8 md:p-12 border-b border-charcoal-dark/10 lg:[&:not(:nth-child(3n))]:border-r border-charcoal-dark/10 group hover:bg-charcoal-dark hover:text-white-bg transition-all duration-500 cursor-pointer bg-stone-bg shadow-[0_-10px_30px_rgba(0,0,0,0.05)] md:shadow-none"
             >
               <span className="text-[10px] mb-6 md:mb-8 block opacity-40">0{i + 1}</span>
-              <h3 className="text-xl md:text-2xl mb-4 uppercase">{service.title}</h3>
+              <h3 className="text-xl md:text-2xl mb-4 uppercase text-brown-heading group-hover:text-white-bg">{service.title}</h3>
               <p className="text-xs md:text-sm font-light leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity mb-8">
                 {service.desc}
               </p>
@@ -379,17 +380,17 @@ export default function App() {
               top: `${70 + (6 * 2)}px`,
               zIndex: 16
             }}
-            className="sticky md:static p-8 md:p-12 border-b border-dark-base/10 lg:[&:not(:nth-child(3n))]:border-r border-dark-base/10 flex flex-col justify-between bg-dark-base/5 group hover:bg-dark-base hover:text-white-bg transition-all duration-500 cursor-pointer bg-light-bg shadow-[0_-10px_30px_rgba(0,0,0,0.08)] md:shadow-none"
+            className="sticky md:static p-8 md:p-12 border-b border-charcoal-dark/10 lg:[&:not(:nth-child(3n))]:border-r border-charcoal-dark/10 flex flex-col justify-between bg-charcoal-dark/5 group hover:bg-charcoal-dark hover:text-white-bg transition-all duration-500 cursor-pointer bg-stone-bg shadow-[0_-10px_30px_rgba(0,0,0,0.05)] md:shadow-none"
           >
             <div>
               <span className="text-[10px] mb-6 md:mb-8 block opacity-40">07</span>
-              <h3 className="text-xl md:text-2xl mb-4 uppercase">Комплексна підтримка</h3>
+              <h3 className="text-xl md:text-2xl mb-4 uppercase text-brown-heading group-hover:text-white-bg">Комплексна підтримка</h3>
               <p className="text-xs md:text-sm font-light leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity mb-8">
                 Супровід після запуску: оновлення, правки, розвиток сайту разом із вашим бізнесом.
               </p>
             </div>
             <div className="flex items-end justify-between">
-              <Button primary href="https://t.me/olesia_dmitriyeva" className="bg-dark-base text-white-bg border-dark-base hover:bg-light-accent hover:text-white-bg group-hover:bg-white-bg group-hover:text-dark-base w-full uppercase">Обговорити</Button>
+              <Button variant="outline-dark" href="https://t.me/olesia_dmitriyeva" className="w-full uppercase">Обговорити</Button>
               <Plus className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity ml-4 shrink-0" aria-hidden="true" />
             </div>
           </div>
@@ -403,20 +404,21 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        className="border-b border-white-bg/10"
+        className="border-b border-charcoal-dark/10"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-charcoal-dark/10 bg-charcoal-dark text-white-bg">
           <div className="p-8 md:p-12 md:border-r lg:border-r border-white-bg/10">
-            <h2 className="text-4xl md:text-5xl">Кейси</h2>
+            <h2 className="text-4xl md:text-5xl text-white-bg">Кейси</h2>
           </div>
           <div className="md:col-span-1 lg:col-span-3 p-8 md:p-12 flex items-center">
-            <p className="label-micro">Вибрані проєкти 2024-2025</p>
+            <p className="label-micro text-white-bg/60">Вибрані проєкти 2024-2025</p>
           </div>
         </div>
         
         {[
           {
             title: "Анна Саєнко",
+            overlayTitle: "ANNA SAIENKO",
             subtitle: "Експертний лендинг",
             description: "Цей сайт було створено як персональний бренд-простір для Анни Саєнко, з фокусом на експертність, естетику та чітку комунікацію цінності послуг.\n\nОсновне завдання проєкту, не просто представити особистий бренд, а вибудувати логічний користувацький шлях: від першого враження до розуміння, хто ця людина, чим вона корисна і як з нею працювати.\n\nСайт працює як інструмент довіри та конверсії, поєднуючи мінімалістичний дизайн, структурований контент і зрозумілий UX.",
             img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710639/01_fgimtp.png",
@@ -424,6 +426,7 @@ export default function App() {
           },
           {
             title: "Nemova Agency",
+            overlayTitle: "NEMOVA AGENCY",
             subtitle: "SMM Агенція",
             description: "Nemova Agency, це діджитал-агентство з Німеччини, що спеціалізується на брендингу та маркетингу в соціальних мережах. Метою проєкту було створення сучасної, орієнтованої на конверсію цільової сторінки Webflow, яка чітко передає послуги, досвід та ціннісну пропозицію агентства, водночас зміцнюючи довіру до бренду та видимість в Інтернеті.",
             img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710640/02_igak01.png",
@@ -431,6 +434,7 @@ export default function App() {
           },
           {
             title: "Recruiting Support",
+            overlayTitle: "RECRUITING SUPPORT",
             subtitle: "HR Агенція",
             description: "Ми продумали структуру, дизайн і візуальну мову, яка підкреслює професійність та досвід команди, що надає послуги рекрутингу",
             img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710641/05_lsyyho.png",
@@ -438,6 +442,7 @@ export default function App() {
           },
           {
             title: "Інна Курилюк",
+            overlayTitle: "INNA KURYLIUK",
             subtitle: "Лікар-гінеколог, хірург",
             description: "Інна Курилюк, лікар-гінеколог, хірург і спеціалістка з естетичної медицини, яка надає персоналізовану, доказову допомогу у сфері жіночого здоров’я та краси. Основна увага приділяється як професійному медичному підходу, так і комфорту пацієнток. Інна Курилюк пропонує повний спектр послуг, від гінекологічних консультацій і малоінвазирних хірургічних втручань до сучасних естетичних процедур.",
             img: "https://res.cloudinary.com/dset5uqua/image/upload/f_auto,q_auto/v1774710639/04_lty1tr.png",
@@ -445,6 +450,7 @@ export default function App() {
           },
           {
             title: "UTB Recruitment Agency",
+            overlayTitle: "UTB RECRUITMENT",
             subtitle: "Рекрутингова агенція",
             description: "Тут був наданий повний спектр послуг: розробка логотипу, оформлення соціальних мереж, створення двомовного сайту",
             img: "https://res.cloudinary.com/dset5uqua/image/upload/v1774961474/05_onrh9l.png",
@@ -457,9 +463,9 @@ export default function App() {
             href={work.link || "#"} 
             target={work.link ? "_blank" : undefined}
             rel={work.link ? "noopener noreferrer" : undefined}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10 group cursor-pointer"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-charcoal-dark/10 group cursor-pointer"
           >
-            <div className="md:col-span-1 lg:col-span-3 relative aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] overflow-hidden md:border-r lg:border-r border-white-bg/10">
+            <div className="md:col-span-1 lg:col-span-3 relative aspect-[4/3] sm:aspect-video md:aspect-auto md:h-[60vh] overflow-hidden md:border-r lg:border-r border-charcoal-dark/10">
               <motion.img 
                 initial={{ scale: 1.1 }}
                 whileInView={{ scale: 1 }}
@@ -474,11 +480,12 @@ export default function App() {
                 className={`w-full h-full object-cover ${work.position || 'object-top'} md:group-hover:scale-105 transition-all duration-1000`}
                 referrerPolicy="no-referrer"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-dark/40 to-transparent opacity-40 group-hover:opacity-20 transition-opacity duration-500" />
             </div>
-            <div className="p-8 md:p-12 flex flex-col justify-between bg-light-bg text-dark-base md:group-hover:bg-dark-base md:group-hover:text-white-bg transition-colors duration-500 min-h-[150px] md:min-h-0">
+            <div className="p-8 md:p-12 flex flex-col justify-between bg-stone-bg text-charcoal-dark md:group-hover:bg-charcoal-dark md:group-hover:text-white-bg transition-colors duration-500 min-h-[150px] md:min-h-0">
               <div>
-                <h3 className="text-2xl md:text-3xl mb-2">{work.title}</h3>
-                <p className="text-xs md:text-sm uppercase opacity-60 mb-6">{work.subtitle}</p>
+                <h3 className="text-2xl md:text-3xl mb-2 font-bold uppercase group-hover:text-white-bg">{work.title}</h3>
+                <p className="text-xs md:text-sm uppercase opacity-60 mb-6 group-hover:text-white-bg/60">{work.subtitle}</p>
                 {work.description && (
                   <p className="text-xs md:text-sm font-light leading-relaxed opacity-80 block md:hidden md:group-hover:block transition-all duration-500 whitespace-pre-line">
                     {work.description}
@@ -490,8 +497,8 @@ export default function App() {
           </a>
         ))}
 
-        <div className="p-8 md:p-12 flex justify-center border-b border-white-bg/10">
-          <Button href="https://www.behance.net/olesiadmitriy" className="w-full md:w-auto">
+        <div className="p-8 md:p-12 flex justify-center border-b border-charcoal-dark/10 bg-charcoal-dark">
+          <Button variant="outline-light" href="https://www.behance.net/olesiadmitriy" className="w-full md:w-auto">
             Більше проєктів на Behance
           </Button>
         </div>
@@ -504,10 +511,10 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white-bg/10"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-charcoal-dark/10 bg-charcoal-dark text-white-bg"
       >
         <div className="p-8 md:p-12 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-start min-h-[100px] lg:min-h-[400px]">
-          <h2 className="text-5xl md:text-7xl font-bold uppercase">Відгуки</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-3xl xl:text-7xl font-bold uppercase text-white-bg whitespace-nowrap lg:whitespace-normal">Відгуки</h2>
         </div>
         <div className="md:col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-2">
           {[
@@ -532,12 +539,12 @@ export default function App() {
               text: "Олеся розробила для нас логотип, сайт і соціальні мережі як єдину систему. У результаті ми отримали сучасний, структурований дизайн, який підсилює довіру до бренду та чітко передає нашу експертність. \n\nРекомендуємо як дизайнера, який працює на результат, а не просто «красиво»."
             }
           ].map((t, i) => (
-            <div key={i} className={`p-8 md:p-12 flex flex-col justify-center border-b border-white-bg/10 lg:border-r ${i % 2 === 1 ? 'lg:border-r-0 bg-light-bg/5' : ''}`}>
-              <Quote strokeWidth={1} className="w-6 h-6 md:w-8 md:h-8 text-white-bg mb-6 md:mb-8 opacity-50" aria-hidden="true" />
+            <div key={i} className={`p-8 md:p-12 flex flex-col justify-center border-b border-white-bg/10 lg:border-r border-white-bg/10 ${i % 2 === 1 ? 'lg:border-r-0' : ''}`}>
+              <Quote strokeWidth={1} className="w-6 h-6 md:w-8 md:h-8 text-white-bg mb-6 md:mb-8 opacity-20" aria-hidden="true" />
               <p className="text-sm md:text-base font-light italic leading-relaxed mb-8 md:mb-12 opacity-80">
                 "{t.text}"
               </p>
-              <p className="label-micro">{t.name}, {t.role}</p>
+              <p className="label-micro text-white-bg/60">{t.name}, {t.role}</p>
             </div>
           ))}
         </div>
@@ -546,7 +553,7 @@ export default function App() {
       {/* Footer / Contact */}
       <footer 
         id="contact" 
-        className="border-t border-white-bg/10 relative overflow-hidden bg-dark-base"
+        className="border-t border-charcoal-dark/10 relative overflow-hidden bg-charcoal-dark text-white-bg"
       >
         <ParticleBackground />
         
@@ -567,7 +574,7 @@ export default function App() {
                 height={1200}
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                className="w-full h-full object-cover transition-all duration-700"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -576,12 +583,12 @@ export default function App() {
               <div className="md:col-span-1 lg:col-span-2 p-8 md:p-12 border-b md:border-b-0 md:border-r lg:border-r border-white-bg/10 flex flex-col justify-between min-h-[300px] lg:min-h-[400px]">
                 <div>
                   <span className="label-micro mb-8 md:mb-12 block opacity-40">• Співпраця</span>
-                  <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] font-sans font-normal uppercase opacity-90 tracking-[-0.04em]">
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] font-sans font-normal uppercase opacity-90 tracking-[-0.04em] text-stone-bg">
                     СТВОРІМО ЩОСЬ <br/> СПРАВЖНЄ <br/> РАЗОМ
                   </h2>
                 </div>
                 <div className="mt-12">
-                  <Button primary href="https://t.me/olesia_dmitriyeva" className="w-full sm:w-auto">
+                  <Button variant="outline-light" href="https://t.me/olesia_dmitriyeva" className="w-full sm:w-auto">
                     Обговорити проєкт
                   </Button>
                 </div>
@@ -589,15 +596,15 @@ export default function App() {
 
               <div className="flex flex-col">
                 <GridCell label="Email" className="border-b border-white-bg/10">
-                  <a href="mailto:olesiazhulkovska@gmail.com" className="text-xs md:text-sm uppercase font-bold hover:text-primary-accent transition-colors mt-4 block truncate" aria-label="Надіслати email">
+                  <a href="mailto:olesiazhulkovska@gmail.com" className="text-xs md:text-sm uppercase font-bold hover:text-accent-line transition-colors mt-4 block truncate" aria-label="Надіслати email">
                     olesiazhulkovska@gmail.com
                   </a>
                 </GridCell>
                 <GridCell label="Social" className="border-b border-white-bg/10">
                   <div className="flex flex-col gap-2 mt-4">
-                    <a href="https://www.instagram.com/olesia_dmitriieva/" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-primary-accent transition-colors">Instagram</a>
-                    <a href="https://t.me/olesia_dmitriyeva" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-primary-accent transition-colors">Telegram</a>
-                    <a href="https://www.behance.net/olesiadmitriy" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-primary-accent transition-colors">Behance</a>
+                    <a href="https://www.instagram.com/olesia_dmitriieva/" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-accent-line transition-colors">Instagram</a>
+                    <a href="https://t.me/olesia_dmitriyeva" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-accent-line transition-colors">Telegram</a>
+                    <a href="https://www.behance.net/olesiadmitriy" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase hover:text-accent-line transition-colors">Behance</a>
                   </div>
                 </GridCell>
                 <GridCell label="Location" className="border-b-0">
@@ -621,7 +628,7 @@ export default function App() {
               <span className="text-[8px] uppercase tracking-[0.3em] opacity-30">Premium Web Solutions</span>
             </div>
             <div className="p-6 flex items-center justify-center lg:justify-end">
-               <Plus className="w-4 h-4 text-primary-accent opacity-20" aria-hidden="true" />
+               <Plus className="w-4 h-4 text-accent-line opacity-20" aria-hidden="true" />
             </div>
           </div>
         </motion.div>
