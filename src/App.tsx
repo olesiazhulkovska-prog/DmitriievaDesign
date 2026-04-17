@@ -458,11 +458,11 @@ export default function App() {
             position: "object-right"
           },
           {
-            title: "Rideline Studio",
-            overlayTitle: "RIDELINE STUDIO",
+            title: "Ride Line Studio",
+            overlayTitle: "RIDE LINE STUDIO",
             subtitle: "Салон краси",
             description: "Дизайн та реалізація сайту для салону краси.\n\nОсновною задачею було створити естетичний і водночас функціональний інтерфейс, який передає атмосферу бренду та викликає довіру. У дизайні зробила акцент на чистій структурі, візуальній легкості та зручній навігації.\n\nСайт продуманий для швидкого ознайомлення з послугами, комфортного запису та коректного відображення на мобільних пристроях.\n\nУ результаті клієнт отримав сучасний digital-образ, який підсилює позиціонування салону та покращує взаємодію з клієнтами",
-            img: "https://res.cloudinary.com/dset5uqua/image/upload/v1776432753/01_1_dvwbvz.webp",
+            img: "https://res.cloudinary.com/dset5uqua/image/upload/v1776433345/01_met541.png",
             link: "https://www.rideline-studio.de"
           }
         ].map((work, i) => (
