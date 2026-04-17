@@ -456,6 +456,14 @@ export default function App() {
             img: "https://res.cloudinary.com/dset5uqua/image/upload/v1774961474/05_onrh9l.png",
             link: "https://www.utb-recruiting.com/",
             position: "object-right"
+          },
+          {
+            title: "Rideline Studio",
+            overlayTitle: "RIDELINE STUDIO",
+            subtitle: "Салон краси",
+            description: "Дизайн та реалізація сайту для салону краси.\n\nОсновною задачею було створити естетичний і водночас функціональний інтерфейс, який передає атмосферу бренду та викликає довіру. У дизайні зробила акцент на чистій структурі, візуальній легкості та зручній навігації.\n\nСайт продуманий для швидкого ознайомлення з послугами, комфортного запису та коректного відображення на мобільних пристроях.\n\nУ результаті клієнт отримав сучасний digital-образ, який підсилює позиціонування салону та покращує взаємодію з клієнтами",
+            img: "https://res.cloudinary.com/dset5uqua/image/upload/v1776432753/01_1_dvwbvz.webp",
+            link: "https://www.rideline-studio.de"
           }
         ].map((work, i) => (
           <a 
